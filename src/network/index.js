@@ -5,8 +5,9 @@ export default function axios(option) {
 	return new Promise((resolve, reject) => {
 		// 1.创建axios的实例
 		const instance = originAxios.create({
-			baseURL: 'http://localhost:4000',
-			timeout: 10000
+			// baseURL: 'http://localhost:4000/api',
+			// timeout: 10000
+			// headers: { 'content-type': 'application/x-www-form-urlencoded' }
 		})
 
 		// 配置请求和响应拦截
@@ -19,13 +20,14 @@ export default function axios(option) {
 
 				// 3.对请求的参数进行序列化(看服务器是否需要序列化)
 				// config.data = qs.stringify(config.data)
-				// console.log(config);
+				// console.log(config)
 
 				// 4.等等
 				return config
 			},
 			err => {
-				// console.log('来到了request拦截failure中');
+				console.log('来到了request拦截failure中')
+				console.log(err)
 				return err
 			}
 		)

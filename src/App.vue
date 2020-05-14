@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <!-- 路由占位符 -->
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
 
     <!-- 底部tabBar -->
     <!-- 路由元数据 -->

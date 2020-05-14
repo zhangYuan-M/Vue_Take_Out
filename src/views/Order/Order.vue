@@ -8,7 +8,7 @@
     </nav-bar>
 
     <!-- 没有登录的展示区域 -->
-    <order-login />
+    <order-login class="order-show" />
   </div>
 </template>
 
@@ -33,5 +33,9 @@ export default {
   font-size: 21px;
   color: whitesmoke;
   font-weight: 500;
+}
+.order-show {
+  margin: 100px auto;
+  width: 250px;
 }
 </style>

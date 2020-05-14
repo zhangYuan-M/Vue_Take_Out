@@ -6,7 +6,7 @@
         <i class="iconfont icon-sousuo"></i>
       </template>
       <template v-slot:center>
-        <p class="center-text">硅谷外卖</p>
+        <p class="center-text">{{address.name}}</p>
       </template>
       <template v-slot:right>
         <router-link class="login-box" to="/login" tag="a">
@@ -20,10 +20,14 @@
 
 <script>
 import NavBar from '../../../components/common/navbar/NavBar.vue'
+import { mapState } from 'vuex'
 export default {
   name: 'HomeNavBar',
   components: {
     NavBar
+  },
+  computed: {
+    ...mapState(['address'])
   }
 }
 </script>

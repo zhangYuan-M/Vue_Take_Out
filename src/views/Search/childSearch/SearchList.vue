@@ -3,14 +3,13 @@
     <!-- 附近商家标题 -->
     <div class="home-near-title">
       <i class="iconfont icon-xuanxiang"></i>
-      <span class="shop_header_title">附近商家</span>
+      <span class="shop_header_title">推荐商家</span>
     </div>
 
-    <!-- 商家列表 -->
-    <single-row v-if="shops.length">
+    <!-- 商家列表text -->
+    <single-row v-if="shops.length" class="foo-scroll">
       <div @click="shopItemClick">
         <single-row-item v-for="(item, index) in shops" :key="index">
-          <!-- <router-link to="/shopList" tag="a"> -->
           <template v-slot:left>
             <div class="shop_left">
               <img class="shop_img" v-lazy="imgRandomURl" />
@@ -29,9 +28,9 @@
               </div>
 
               <p class="shop_delivery_msg">
-                <span>¥20起送</span>
+                <span>¥{{item.float_minimum_order_amount}}起送</span>
                 <span class="segmentation">/</span>
-                <span>{{item.piecewise_agent_fee.tips}}</span>
+                <span>配送费约{{item.float_delivery_fee}}元</span>
               </p>
             </section>
           </template>
@@ -42,20 +41,20 @@
                 <li class="supports">准</li>
                 <li class="supports">票</li>
               </ul>
-              <span class="delivery_style delivery_right">{{item.delivery_mode.text}}</span>
+              <span class="delivery_style delivery_right">菜鸟专送</span>
             </section>
           </template>
-          <!-- </router-link> -->
         </single-row-item>
       </div>
     </single-row>
 
     <!-- 加载中的图片 -->
-    <img src="../../../assets/images/msite_back.svg" alt v-else v-for="item in 7" :key="item" />
+    <img src="../../../assets/images/msite_back.svg" v-else v-for="item in 7" :key="item" />
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 import SingleRow from '../../../components/common/singleRow/singleRow.vue'
 import SingleRowItem from '../../../components/common/singleRow/singleRowItem.vue'
 import Star from '../../../components/content/start/Star'
@@ -64,6 +63,7 @@ import { mapState } from 'vuex'
 
 export default {
   name: 'HomeNearShop',
+
   data() {
     return {
       imgRandomURl:
@@ -77,17 +77,35 @@ export default {
   },
   methods: {
     shopItemClick() {
-      console.log(123)
       this.$router.push('/shopList')
     }
   },
   computed: {
-    ...mapState(['shops'])
+    ...mapState({
+      shops: 'searchList'
+    })
+  },
+  watch: {
+    shops(value) {
+      this.$nextTick(() => {
+        new BScroll('.foo-scroll', {
+          click: true
+        })
+      })
+    }
   }
 }
 </script>
 
 <style scoped>
+.foo-scroll {
+  position: absolute;
+  top: 128px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
 /* 附近商家标题 */
 .home-near-title {
   margin: 9px;

@@ -9,17 +9,21 @@
 
     <!-- 搜索框区域 -->
     <search-input />
+
+    <search-list />
   </div>
 </template>
 
 <script>
+import SearchList from './childSearch/SearchList'
 import NavBar from '../../components/common/navbar/NavBar.vue'
 import SearchInput from './childSearch/SearchInput'
 export default {
   name: 'Search',
   components: {
     NavBar,
-    SearchInput
+    SearchInput,
+    SearchList
   }
 }
 </script>

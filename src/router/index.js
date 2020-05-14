@@ -9,6 +9,10 @@ const Profile = () => import('../views/Profile/Profile.vue')
 const Search = () => import('../views/Search/Search.vue')
 const Order = () => import('../views/Order/Order.vue')
 const Login = () => import('../views/Login/Login.vue')
+const ShopList = () => import('../views/ShopList/ShopList.vue')
+const ShopListAssess = () => import('../views/ShopList/childShopList/ShopListAssess.vue')
+const ShopListInfo = () => import('../views/ShopList/childShopList/ShopListInfo.vue')
+const ShopListOrder = () => import('../views/ShopList/childShopList/ShopListOrder.vue')
 
 Vue.use(VueRouter)
 
@@ -53,6 +57,32 @@ const routes = [
 		path: '/login',
 		name: 'Login',
 		component: Login
+	},
+	{
+		path: '/shopList',
+		name: 'shopList',
+		component: ShopList,
+		children: [
+			{
+				path: '',
+				redirect: 'ShopListOrder'
+			},
+			{
+				path: 'ShopListAssess',
+				component: ShopListAssess
+			},
+			{
+				path: 'ShopListInfo',
+				component: ShopListInfo
+			},
+			{
+				path: 'ShopListOrder',
+				component: ShopListOrder,
+				meta: {
+					isShowCart: true
+				}
+			}
+		]
 	}
 	// {
 	//   path: '/about',

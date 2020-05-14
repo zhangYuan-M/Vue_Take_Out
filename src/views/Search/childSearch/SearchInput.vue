@@ -1,15 +1,43 @@
 .<template>
   <div class="search-input">
-    <input type="text" placeholder="请输入搜索的关键字" />
-    <button>提交</button>
+    <input type="text" placeholder="请输入搜索的关键字" v-model="searchKey" />
+    <button @click="btnClick">提交</button>
   </div>
 </template>
 
 <script>
-export default {}
+import { getShopListByKeyword } from '../../../network/search'
+import { mapActions } from 'vuex'
+export default {
+  data() {
+    return {
+      shopLists: [],
+      searchKey: '1'
+    }
+  },
+  mounted() {
+    console.log('mounted')
+    this.getSearchList({ keyword: '1' })
+  },
+  methods: {
+    ...mapActions(['getSearchList']),
+    btnClick() {
+      this.getSearchList({ keyword: this.searchKey })
+    }
+  },
+  computed: {}
+}
 </script>
 
 <style scoped>
+button {
+  border-radius: 5px;
+  -webkit-appearance: none;
+  border: none;
+}
+button:checked {
+  border: 1px solid greenyellow;
+}
 .search-input {
   display: flex;
   justify-content: space-around;

@@ -1,75 +1,52 @@
 <template>
   <div class="home-swiper">
-    <swiper>
-      <swiper-item v-for="(item, index) in 4" :key="index">
+    <swiper v-if="foodCategoryArr.length">
+      <swiper-item v-for="(categorys, index) in foodCategoryArr" :key="index">
         <div class="swiper-slide">
-          <a href="javascript:" class="link_to_food">
+          <a :href="item.link" class="link_to_food" v-for="(item,indey) in categorys" :key="indey">
             <div class="food_container">
-              <img src="../../../assets/images/nav/1.jpg" />
+              <img :src="'https://fuss10.elemecdn.com/' +item.image_url" />
             </div>
-            <span>甜品饮品</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/2.jpg" />
-            </div>
-            <span>商超便利</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/3.jpg" />
-            </div>
-            <span>美食</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/4.jpg" />
-            </div>
-            <span>简餐</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/5.jpg" />
-            </div>
-            <span>新店特惠</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/6.jpg" />
-            </div>
-            <span>准时达</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/7.jpg" />
-            </div>
-            <span>预订早餐</span>
-          </a>
-          <a href="javascript:" class="link_to_food">
-            <div class="food_container">
-              <img src="../../../assets/images/nav/8.jpg" />
-            </div>
-            <span>土豪推荐</span>
+            <span>{{item.title}}</span>
           </a>
         </div>
       </swiper-item>
     </swiper>
+    <img src="../../../assets/images/msite_back.svg" alt v-else />
     <p class="home-swiper-bottom"></p>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import { Swiper, SwiperItem } from '../../../components/common/swiper/index.js'
 export default {
   name: 'HomeSwiper',
   data() {
     return {
-      num: []
+      // foodCategoryArr: []
     }
   },
   components: {
     Swiper,
     SwiperItem
+  },
+  computed: {
+    ...mapState(['foodCategorys']),
+    foodCategoryArr() {
+      const { foodCategorys } = this
+      const pageSize = 8
+      const newArr = []
+      let minArr = []
+      foodCategorys.forEach((item, index) => {
+        minArr.push(item)
+        if (!((index + 1) % pageSize)) {
+          newArr.push(minArr)
+          minArr = []
+        }
+      })
+      return newArr
+    }
   }
 }
 </script>
